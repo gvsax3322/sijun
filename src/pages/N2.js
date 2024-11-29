@@ -108,9 +108,9 @@ const N2 = () => {
   const gradeAnswers = () => {
     const correctAnswers = getCorrectAnswers();
     const userAnswersArray = userAnswers
-      .split("\n")
-      .map(ans => ans.trim())
-      .map(Number);
+      .replace(/\n/g, "") // 줄바꿈 제거
+      .split("") // 각 문자를 개별 답안으로 분리
+      .map(Number); // 숫자로 변환
 
     let correct = 0;
     let incorrectQuestions = [];
@@ -128,6 +128,7 @@ const N2 = () => {
 
     setResult({ correct, incorrect, score, incorrectQuestions });
   };
+
   const navigate = useNavigate();
 
   return (
