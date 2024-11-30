@@ -30,10 +30,14 @@ const Button = styled.button`
   display: block;
   margin: 0 auto;
   background-color: ${({ selected }) => (selected ? "#45a049" : "#673ab7")};
+  background-image: url("assets/images/as1.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   color: white;
   font-size: 18px;
   border: none;
-  padding: 10px 20px;
+  padding: 20px 30px;
   border-radius: 5px;
   cursor: pointer;
   &:hover {

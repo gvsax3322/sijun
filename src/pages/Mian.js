@@ -17,7 +17,13 @@ const BackgroundContainer = styled.div`
 
 // 버튼 스타일
 const Button = styled.button`
+  display: block;
+  margin: 0 auto;
   background-color: ${({ selected }) => (selected ? "#45a049" : "#673ab7")};
+  background-image: url("assets/images/as1.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   color: white;
   font-size: 18px;
   border: none;
