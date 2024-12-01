@@ -3,7 +3,6 @@ import styled, { keyframes } from "styled-components";
 
 // 음료수 배열
 const drinks = [
-  // 기존 제품
   "유어스)하늘가득납작복숭아330ML",
   "유어스)하늘가득적포도330ML",
   "유어스)싱하망고탄산수350ML",
@@ -52,8 +51,6 @@ const drinks = [
   "유어스)슈퍼히어로드링크120ML",
   "유어스)DMZ맑은샘물2L",
   "유어스)지리산맑은샘물2L",
-
-  // 탄산음료
   "코카콜라",
   "펩시콜라",
   "스프라이트",
@@ -65,16 +62,12 @@ const drinks = [
   "페리에",
   "산펠레그리노",
   "하늘보리 탄산수",
-
-  // 에너지 음료
   "핫식스",
   "레드불",
   "몬스터 에너지",
   "락스타 에너지",
   "빡텐 에너지드링크",
   "슈퍼히어로 드링크",
-
-  // 건강 음료
   "비타500",
   "박카스D",
   "박카스F",
@@ -103,6 +96,15 @@ const fadeIn = keyframes`
 const spin = keyframes`
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+`;
+
+const splitAnimation = keyframes`
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
 `;
 
 // 스타일 컴포넌트
@@ -159,17 +161,72 @@ const Loader = styled.div`
   animation: ${spin} 1s linear infinite;
 `;
 
+const PriceSection = styled.div`
+  margin-top: 40px;
+  font-size: 1.5rem;
+  color: #333;
+`;
+
+const PriceInput = styled.input`
+  padding: 10px;
+  font-size: 1rem;
+  margin-right: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+`;
+
+const PriceButton = styled.button`
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #1976d2;
+  }
+`;
+
+const PriceResult = styled.div`
+  margin-top: 20px;
+  font-size: 1.5rem;
+  font-weight: bold;
+`;
+
+const SplitContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+`;
+
+const SplitBar = styled.div`
+  width: 50%;
+  height: 30px;
+  background-color: #ccc;
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+`;
+
+const SplitFill = styled.div`
+  height: 100%;
+  background-color: #4caf50;
+  border-radius: 15px;
+  animation: ${splitAnimation} 2s ease forwards;
+`;
+
 const Su = () => {
-  // 상태 관리: 랜덤 음료수 조합과 로딩 상태
   const [randomCombo, setRandomCombo] = useState("");
   const [loading, setLoading] = useState(false);
+  const [totalPrice, setTotalPrice] = useState("");
+  const [pricePerPerson, setPricePerPerson] = useState([0, 0]);
 
-  // 랜덤 음료수 조합 생성 함수
   const generateRandomCombo = () => {
-    // 로딩 상태 활성화
     setLoading(true);
-
-    // 3초 후 로딩 종료 및 음료수 조합 생성
     setTimeout(() => {
       const randomIndexes = new Set();
       while (randomIndexes.size < 2) {
@@ -178,8 +235,22 @@ const Su = () => {
 
       const combo = [...randomIndexes].map(index => drinks[index]).join(" + ");
       setRandomCombo(combo);
-      setLoading(false); // 로딩 상태 비활성화
-    }, 3000); // 3초 후에 실행
+      setLoading(false);
+    }, 3000);
+  };
+
+  const calculatePriceSplit = () => {
+    const total = parseFloat(totalPrice);
+    if (!total || total <= 0) return;
+
+    // 랜덤으로 두 사람의 금액을 나누기
+    const firstPersonAmount = Math.random() * total;
+    const secondPersonAmount = total - firstPersonAmount;
+
+    setPricePerPerson([
+      firstPersonAmount.toFixed(2),
+      secondPersonAmount.toFixed(2),
+    ]);
   };
 
   return (
@@ -190,6 +261,23 @@ const Su = () => {
         <Loader />
       ) : (
         randomCombo && <DrinkDisplay>선택된 조합: {randomCombo}</DrinkDisplay>
+      )}
+
+      <PriceSection>
+        <h2>금액 분배하기</h2>
+        <PriceInput
+          type="number"
+          placeholder="총 금액"
+          value={totalPrice}
+          onChange={e => setTotalPrice(e.target.value)}
+        />
+        <PriceButton onClick={calculatePriceSplit}>분배하기</PriceButton>
+      </PriceSection>
+
+      {pricePerPerson[0] !== 0 && pricePerPerson[1] !== 0 && (
+        <PriceResult>
+          남시준: {pricePerPerson[0]}원, 백경국: {pricePerPerson[1]}원
+        </PriceResult>
       )}
     </Container>
   );
