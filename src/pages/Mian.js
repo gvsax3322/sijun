@@ -5,6 +5,7 @@ import styled from "styled-components";
 const BackgroundContainer = styled.div`
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
   height: 100vh;
   background-image: url("assets/images/a1.jpeg");
@@ -34,16 +35,26 @@ const Button = styled.button`
     background-color: ${({ selected }) => (selected ? "#45a049" : "#7e57c2")};
   }
 `;
-
+const Axxx = styled.div`
+  display: flex;
+  gap: 100px;
+`;
 const Mian = () => {
   const navigate = useNavigate();
 
   return (
-    <BackgroundContainer>
-      <Button onClick={() => navigate("/n1")}>1</Button>
-      <Button onClick={() => navigate("/n2")}>2</Button>
-      <Button onClick={() => navigate("/n3")}>3</Button>
-    </BackgroundContainer>
+    <>
+      <BackgroundContainer>
+        <div>
+          <Button onClick={() => navigate("/su")}>음류수</Button>
+        </div>
+        <Axxx>
+          <Button onClick={() => navigate("/n1")}>1</Button>
+          <Button onClick={() => navigate("/n2")}>2</Button>
+          <Button onClick={() => navigate("/n3")}>3</Button>
+        </Axxx>
+      </BackgroundContainer>
+    </>
   );
 };
 

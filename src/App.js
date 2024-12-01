@@ -4,6 +4,7 @@ import Mian from "./pages/Mian";
 import N3 from "./pages/N3";
 import N2 from "./pages/N2";
 import N1 from "./pages/N1";
+import Su from "./pages/Su";
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
       <Route path="n3" element={<N3 />}></Route>
       <Route path="n2" element={<N2 />}></Route>
       <Route path="n1" element={<N1 />}></Route>
+      <Route path="su" element={<Su />}></Route>
     </Routes>
   );
 };
