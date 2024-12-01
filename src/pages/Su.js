@@ -247,10 +247,11 @@ const Su = () => {
     const firstPersonAmount = Math.random() * total;
     const secondPersonAmount = total - firstPersonAmount;
 
-    setPricePerPerson([
-      firstPersonAmount.toFixed(2),
-      secondPersonAmount.toFixed(2),
-    ]);
+    // 백의자리 반올림 처리
+    const roundedFirstPerson = Math.round(firstPersonAmount / 100) * 100;
+    const roundedSecondPerson = Math.round(secondPersonAmount / 100) * 100;
+
+    setPricePerPerson([roundedFirstPerson, roundedSecondPerson]);
   };
 
   return (
